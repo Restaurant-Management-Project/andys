@@ -16,6 +16,22 @@ const Header: React.FC<HeaderProps> = ({
   const location = useLocation();
 
   const isMainPage = location.pathname === "/";
+  let backButtonDestination = "/";
+
+  if (!isMainPage) {
+    const orderId = location.pathname.split("/")[2];
+    if (
+      location.pathname.includes("/call-waiter/") ||
+      location.pathname.includes("/view-order/") ||
+      location.pathname.includes("/payment/")
+    ) {
+      backButtonDestination = `/home/${orderId}`;
+    }
+  }
+
+  const handleBackButtonClick = () => {
+    window.history.back();
+  };
 
   return (
     <div>
@@ -27,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({
             className="backButton"
             src={BackButton}
             alt="BackButton"
-            onClick={() => window.history.back()}
+            onClick={handleBackButtonClick}
           />
         )}
         <div className="language-dropdown">
